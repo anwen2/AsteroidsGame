@@ -1,9 +1,14 @@
 Spaceship bob;
 Star[] night;
+ArrayList <Asteroid> day = new ArrayList <Asteroid>();
+
 public void setup() 
 {
   bob = new Spaceship();
   night = new Star[100];
+  for(int i = 0; i < 20; i++){
+  	 day.add(new Asteroid());
+  }
   for(int i = 0 ; i < night.length; i++){
   night[i] = new Star((int)(Math.random()*500),(int)(Math.random()*500));	
   }
@@ -12,11 +17,19 @@ public void setup()
 public void draw() 
 {
   background(0);
-  bob.show();
-  bob.move();
   for(int i = 0 ; i < night.length; i++){
   night[i].show();	
   }
+  for(int i = 0; i < day.size(); i++){
+  	day.get(i).show();
+  	day.get(i).move();
+  	if(dist(bob.getX(),bob.getY(),day.get(i).getX(),day.get(i).getY()) < 20){
+  	day.remove(i);
+  	}
+  }
+
+  bob.show();
+  bob.move();
 }
 public void keyPressed()
 {
@@ -27,10 +40,10 @@ public void keyPressed()
 		bob.accelerate(-0.5);
 	}
 	if(key == 'a'){
-		bob.turn(15);
+		bob.turn(-15);
 	}
 	if(key == 'd'){
-		bob.turn(-15);
+		bob.turn(15);
 	}
 	if(key == 'h'){
 		bob.setPointDirection((int)(Math.random()*360));
